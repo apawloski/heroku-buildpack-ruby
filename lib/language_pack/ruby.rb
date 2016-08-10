@@ -282,7 +282,7 @@ SHELL
       puts "Here are our env vars"
       config_vars = default_config_vars.each do |key, value|
         ENV[key] ||= value
-        puts "#{key} is #{value}
+        puts "#{key} is #{value}"
       end
 
       ENV["GEM_PATH"] = slug_vendor_base
