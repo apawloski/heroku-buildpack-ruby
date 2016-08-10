@@ -58,13 +58,10 @@ class LanguagePack::Ruby < LanguagePack::Base
     puts "Hello there"
     instrument "ruby.default_config_vars" do
       vars = {
-        "LANG" => env("LANG") || "en_US.UTF-8"
+        "LANG" => env("LANG") || "en_US.UTF-8",
+        "RAILS_ENV" => env("RAILS_ENV") || "default"
       }
 
-      vars.merge({
-        "RAILS_ENV" => env("RAILS_ENV") || "default"
-      })
-      
       ruby_version.jruby? ? vars.merge({
         "JAVA_OPTS" => default_java_opts,
         "JRUBY_OPTS" => default_jruby_opts
@@ -279,7 +276,7 @@ SHELL
 
       # TODO when buildpack-env-args rolls out, we can get rid of
       # ||= and the manual setting below
-      puts "Here are our env vars"
+      puts "Here are our env vars:"
       config_vars = default_config_vars.each do |key, value|
         ENV[key] ||= value
         puts "#{key} is #{value}"
