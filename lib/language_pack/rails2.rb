@@ -23,8 +23,8 @@ class LanguagePack::Rails2 < LanguagePack::Ruby
   def default_config_vars
     instrument "rails2.default_config_vars" do
       super.merge({
-        "RAILS_ENV" => env("RAILS_ENV") || "production",
-        "RACK_ENV"  => env("RACK_ENV")  || "production",
+        "RAILS_ENV" => check_dot_env("RAILS_ENV") || "production",
+        "RACK_ENV"  => check_dot_env("RACK_ENV")  || "production",
       })
     end
   end
@@ -83,4 +83,24 @@ private
     set_env_default "RAILS_ENV", "production"
   end
 
+    def check_dot_env(search_key)
+    puts "I'm checking the .env for #{search_key}"
+    File.read(".env").gsub("\r\n","\n").split("\n").inject({}) do |ax, line|
+      if line =~ /\A([A-Za-z_0-9]+)=(.*)\z/
+        key = $1
+        if key.eql? search_key
+          puts "That looks like the search key (#{search_key})"
+          case val = $2
+            # Remove single quotes
+            when /\A'(.*)'\z/ then val = $1
+            # Remove double quotes and unescape string preserving newline characters
+            when /\A"(.*)"\z/ then val = $1.gsub('\n', "\n").gsub(/\\(.)/, '\1')
+          end
+          puts "The val of #{search_key} should be #{val}"
+          val
+        end
+      end
+    end
+    end
+    
 end
