@@ -17,11 +17,12 @@ class LanguagePack::Rails2 < LanguagePack::Ruby
   end
 
   def name
-    "Ruby/Rails"
+    "Ruby/Rails - modified by Andrew"
   end
 
   def default_config_vars
     instrument "rails2.default_config_vars" do
+      puts "Hi, I'm in the default_config_vars"
       super.merge({
         "RAILS_ENV" => env("RAILS_ENV") || "production",
         "RACK_ENV"  => env("RACK_ENV")  || "production",
