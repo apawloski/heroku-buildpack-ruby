@@ -55,6 +55,7 @@ class LanguagePack::Ruby < LanguagePack::Base
   end
 
   def default_config_vars
+    puts "Hello there"
     instrument "ruby.default_config_vars" do
       vars = {
         "LANG" => env("LANG") || "en_US.UTF-8"
