@@ -137,7 +137,6 @@ private
     File.read(".env").gsub("\r\n","\n").split("\n").inject({}) do |ax, line|
       if line =~ /\A([A-Za-z_0-9]+)=(.*)\z/
         key = $1
-        puts "I found #{key}"
         if key.eql? search_key
           puts "That looks like the search key (#{search_key})"
           case val = $2
@@ -145,7 +144,6 @@ private
             when /\A'(.*)'\z/ then val = $1
             # Remove double quotes and unescape string preserving newline characters
             when /\A"(.*)"\z/ then val = $1.gsub('\n', "\n").gsub(/\\(.)/, '\1')
-            else val = $1
           end
           puts "The val of #{search_key} should be #{val}"
           val
