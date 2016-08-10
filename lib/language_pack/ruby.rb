@@ -58,8 +58,8 @@ class LanguagePack::Ruby < LanguagePack::Base
     puts "Hello there, I'm getting default_config_vars from #{Dir.pwd}"
     instrument "ruby.default_config_vars" do
       vars = {
-        "LANG" => env("LANG") || "en_US.UTF-8",
-        "RAILS_ENV" => env("RAILS_ENV") || "default"
+        "LANG" => check_dot_env("LANG") || "en_US.UTF-8",
+        "RAILS_ENV" => check_dot_env("RAILS_ENV") || "default"
       }
 
       ruby_version.jruby? ? vars.merge({
@@ -130,6 +130,28 @@ private
     paths.unshift(safe_binstubs)
 
     paths.join(":")
+  end
+
+  def check_dot_env(search_key)
+    puts "I'm checking the .env for #{search_key}"
+    File.read(".env").gsub("\r\n","\n").split("\n").inject({}) do |ax, line|
+      if line =~ /\A([A-Za-z_0-9]+)=(.*)\z/
+        key = $1
+        puts "I found #{key}"
+        if key.eql? search_key
+          puts "That looks like the search key (#{search_key})"
+          case val = $2
+            # Remove single quotes
+            when /\A'(.*)'\z/ then val = $1
+            # Remove double quotes and unescape string preserving newline characters
+            when /\A"(.*)"\z/ then val = $1.gsub('\n', "\n").gsub(/\\(.)/, '\1')
+            else val = $1
+          end
+          puts "The val of #{search_key} should be #{val}"
+          val
+        end
+      end
+    end
   end
 
   def binstubs_relative_paths
