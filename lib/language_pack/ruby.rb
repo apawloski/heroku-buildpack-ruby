@@ -92,6 +92,7 @@ WARNING
       # check for new app at the beginning of the compile
       new_app?
       Dir.chdir(build_path)
+      puts "My build_path is #{build_path}"
       remove_vendor_bundle
       install_ruby
       install_jvm
@@ -793,6 +794,7 @@ params = CGI.parse(uri.query || "")
   def run_assets_precompile_rake_task
     instrument 'ruby.run_assets_precompile_rake_task' do
 
+      puts "Hi there, I'm about to run assets:precompile from #{Dir.pwd}"
       precompile = rake.task("assets:precompile")
       return true unless precompile.is_defined?
 
