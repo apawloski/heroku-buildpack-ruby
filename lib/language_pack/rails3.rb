@@ -68,9 +68,11 @@ private
         return true unless precompile.is_defined?
 
         topic("Preparing app for Rails asset pipeline")
-
+        renv = rake_env
+        puts "Here is my rake_env's RAILS_ENV: #{renv['RAILS_ENV']}"
+        
         precompile.invoke(env: rake_env)
-
+        
         if precompile.success?
           log "assets_precompile", :status => "success"
           puts "Asset precompilation completed (#{"%.2f" % precompile.time}s)"
@@ -82,16 +84,17 @@ private
   end
 
   def rake_env
+    puts "I'm building a rake env from #{Dir.pwd}"
     if user_env_hash.empty?
       default_env = {
         "RAILS_GROUPS" => ENV["RAILS_GROUPS"] || "assets",
-        "RAILS_ENV"    => ENV["RAILS_ENV"]    || "production",
+        "RAILS_ENV"    => check_dot_env["RAILS_ENV"]    || "production",
         "DATABASE_URL" => database_url
       }
     else
       default_env = {
         "RAILS_GROUPS" => "assets",
-        "RAILS_ENV"    => "production",
+        "RAILS_ENV"    => check_dot_env["RAILS_ENV"]    || "production",
         "DATABASE_URL" => database_url
       }
     end
