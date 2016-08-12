@@ -612,7 +612,7 @@ WARNING
             "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true"
           }
           env_vars["BUNDLER_LIB_PATH"] = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
-          env_vars.merge(default_config_vars)
+          env_vars.merge({ "andrew" => "test" })
           puts "About to run bundle install. Here are the env_vars:"
           env_vars.each do |key, value|
             puts "#{key} is #{value}"
