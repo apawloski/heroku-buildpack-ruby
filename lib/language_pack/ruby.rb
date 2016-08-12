@@ -92,7 +92,6 @@ WARNING
       # check for new app at the beginning of the compile
       new_app?
       Dir.chdir(build_path)
-      puts "My build_path is #{build_path}"
       remove_vendor_bundle
       install_ruby
       install_jvm
@@ -613,6 +612,7 @@ WARNING
             "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true"
           }
           env_vars["BUNDLER_LIB_PATH"] = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
+          env_vars.merge(default_config_vars)
           puts "Running: #{bundle_command}"
           instrument "ruby.bundle_install" do
             bundle_time = Benchmark.realtime do
