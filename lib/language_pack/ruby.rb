@@ -609,7 +609,8 @@ WARNING
             "CPPATH"                        => noshellescape("#{yaml_include}:$CPPATH"),
             "LIBRARY_PATH"                  => noshellescape("#{yaml_lib}:$LIBRARY_PATH"),
             "RUBYOPT"                       => syck_hack,
-            "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true"
+            "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true",
+            "RAILS_ENV" => check_dot_env("RAILS_ENV") || "default"
           }
           env_vars["BUNDLER_LIB_PATH"] = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
           env_vars.merge({ "andrew" => "test" })
