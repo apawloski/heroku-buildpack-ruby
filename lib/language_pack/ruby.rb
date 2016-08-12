@@ -613,6 +613,11 @@ WARNING
           }
           env_vars["BUNDLER_LIB_PATH"] = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
           env_vars.merge(default_config_vars)
+          puts "About to run bundle install. Here are the env_vars:"
+          env_vars.each do |key, value|
+            puts "#{key} is #{value}"
+          end
+         
           puts "Running: #{bundle_command}"
           instrument "ruby.bundle_install" do
             bundle_time = Benchmark.realtime do
