@@ -88,13 +88,13 @@ private
     if user_env_hash.empty?
       default_env = {
         "RAILS_GROUPS" => ENV["RAILS_GROUPS"] || "assets",
-        "RAILS_ENV"    => check_dot_env["RAILS_ENV"]    || "production",
+        "RAILS_ENV"    => check_dot_env("RAILS_ENV")    || "production",
         "DATABASE_URL" => database_url
       }
     else
       default_env = {
         "RAILS_GROUPS" => "assets",
-        "RAILS_ENV"    => check_dot_env["RAILS_ENV"]    || "production",
+        "RAILS_ENV"    => check_dot_env("RAILS_ENV")    || "production",
         "DATABASE_URL" => database_url
       }
     end
