@@ -69,6 +69,7 @@ private
 
         topic("Preparing app for Rails asset pipeline")
         renv = rake_env
+        puts "Hey! I'm precompiling."
         puts "Here is my rake_env's RAILS_ENV: #{renv['RAILS_ENV']}"
         
         precompile.invoke(env: rake_env)
