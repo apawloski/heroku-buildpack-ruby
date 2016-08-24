@@ -83,8 +83,9 @@ private
     set_env_default "RAILS_ENV", "production"
   end
 
-    def check_dot_env(search_key)
-    puts "I'm checking the .env for #{search_key}"
+  def check_dot_env(search_key)
+    return false if not File.file?(".env")
+    
     File.read(".env").gsub("\r\n","\n").split("\n").inject({}) do |ax, line|
       if line =~ /\A([A-Za-z_0-9]+)=(.*)\z/
         key = $1
