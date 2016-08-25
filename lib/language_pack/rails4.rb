@@ -83,6 +83,10 @@ WARNING
         @cache.load default_assets_cache
 
         puts "Hey, I'm about to precompile. My rails env is #{rake_env['RAILS_ENV']}"
+        puts "In fact, here are all of our env vars:"
+        rake_env.each do |key, value|
+          puts "rake_env['#{key}'] is #{value}"
+        end
         precompile.invoke(env: rake_env)
 
         if precompile.success?
