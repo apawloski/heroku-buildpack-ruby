@@ -98,10 +98,10 @@ private
             when /\A"(.*)"\z/ then val = $1.gsub('\n', "\n").gsub(/\\(.)/, '\1')
           end
           puts "The val of #{search_key} should be #{val}"
-          val
+          return val
         end
       end
     end
-    end
+  end
     
 end
